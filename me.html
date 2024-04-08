@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time.com Latest Stories API</title>
+</head>
+<body>
+    <script>
+        async function getLatestStories() {
+            try {
+                const response = await fetch('https://api.time.com/latest-stories');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch latest stories');
+                }
+                const data = await response.json();
+                
+                const stories = data.articles.slice(0, 6).map(article => {
+                    return { title: article.title, link: article.url };
+                });
+
+                return stories;
+            } catch (error) {
+                console.error('Error fetching latest stories:', error);
+                return [];
+            }
+        }
+
+        // Example usage
+        getLatestStories().then(stories => console.log(stories));
+    </script>
+</body>
+</html>
